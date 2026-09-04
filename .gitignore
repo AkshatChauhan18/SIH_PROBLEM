@@ -1,0 +1,59 @@
+# ==============================================================================
+# SIH 2026: AI World Model Network Attack Forecasting — .gitignore
+# ==============================================================================
+
+# --- Datasets (Raw PCAP/CSVs, Preprocessed Windows & Graph Datasets) ---
+data/
+*.csv
+*.pcap
+*.pcap_ISCX
+*.pkl
+*.parquet
+
+# --- Trained Weights & Serialized Checkpoints ---
+models/*.pt
+models/*.pth
+models/*.pkl
+models/*.bin
+models/*.onnx
+!models/.gitkeep
+
+# --- Python Virtual Environments ---
+.venv/
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# --- Byte-compiled / Optimized / Cache files ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# --- Jupyter Notebook & IDE Caches ---
+.ipynb_checkpoints/
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# --- Testing & Code Analysis ---
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+
+# --- OS Specific Files ---
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# --- Logs & Generated Artifacts ---
+*.log
+scratch/
+tmp/
+temp/

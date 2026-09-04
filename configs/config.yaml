@@ -1,0 +1,74 @@
+# ============================================================
+# SIH 2026 — SIH26153: AI World Model Attack Forecasting
+# Centralized System Configuration
+# ============================================================
+
+project:
+  name: "AI-Based Network Attack Forecasting via World Model"
+  problem_id: "SIH26153"
+  random_seed: 42
+
+paths:
+  raw_data_dir: "data/cic2017"
+  processed_dir: "data/processed"
+  graphs_dir: "data/graphs"
+  models_dir: "models"
+  reports_dir: "reports"
+  preprocessors_path: "models/preprocessors.pkl"
+  baseline_model_path: "models/baseline_model.pkl"
+  world_model_path: "models/world_model.pt"
+  evaluation_report_path: "reports/evaluation_report.json"
+
+temporal_windowing:
+  window_seconds: 30             # Configurable: 10 or 30 (30 recommended from empirical inspection)
+  sequence_length: 10            # N = 10 historical windows: z[t-N+1:t]
+  forecast_horizon: 5            # K = 5 recursive rollout steps: z[t+1:t+K]
+
+graph_construction:
+  max_edges: 10000               # GPU VRAM guardrail (RTX 4060 8GB)
+  node_feature_dim: 9            # in_degree, out_degree, in_bytes, out_bytes, in_pkts, out_pkts, syn_ratio, rst_ratio, peer_count
+  edge_feature_dim: 7            # flow_count, total_bytes, total_pkts, mean_duration, mean_iat, syn_count, dst_port_entropy
+  flat_feature_dim: 8            # Window-level stats: flows, bytes, pkts, syn_ratio, rst_ratio, duration, unique_src, unique_dst
+  add_self_loops: false
+
+model_architecture:
+  gnn_hidden_dim: 64             # Hidden dimension of 2-layer GINEConv
+  latent_dim: 128                # Fixed latent vector z[t]: 64 mean pool + 64 max pool
+  gru_hidden_dim: 128            # World Model GRU hidden dimension
+  gru_num_layers: 2              # Multilayer GRU for temporal network dynamics
+  dropout: 0.1
+
+threat_head:
+  num_classes: 7                 # Operational MITRE-aligned categories
+  classes:
+    - "BENIGN"
+    - "RECONNAISSANCE"
+    - "BRUTE_FORCE"
+    - "WEB_EXPLOIT"
+    - "DENIAL_OF_SERVICE"
+    - "BOTNET"
+    - "INFILTRATION"
+  hidden_dim: 64
+
+training:
+  batch_size: 32
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  epochs: 40
+  lambda_threat: 1.0             # Weight for classification CE in Dual Loss: MSE + lambda * CE
+  grad_clip: 1.0
+  use_amp: true                  # Mixed precision (torch.amp) for RTX 4060
+  device: "cuda"                 # Auto-falls back to cpu if cuda unavailable
+
+splits:
+  train_days:
+    - "Monday-WorkingHours"
+    - "Tuesday-WorkingHours"
+    - "Wednesday-workingHours"
+  val_days:
+    - "Thursday-WorkingHours-Morning-WebAttacks"
+    - "Thursday-WorkingHours-Afternoon-Infilteration"
+  test_days:
+    - "Friday-WorkingHours-Morning"
+    - "Friday-WorkingHours-Afternoon-PortScan"
+    - "Friday-WorkingHours-Afternoon-DDos"

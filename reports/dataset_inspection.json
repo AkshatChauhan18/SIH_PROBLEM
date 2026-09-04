@@ -1,0 +1,466 @@
+{
+  "metadata": {
+    "project": "SIH26153 \u2014 AI-Based Network Attack Forecasting via World Model",
+    "generated_at": "2026-09-03T23:17:30.605862",
+    "target_directory": "D:\\sih_project\\data\\cic2017",
+    "total_files_scanned": 8,
+    "overall_elapsed_seconds": 15.38
+  },
+  "schema_specification": {
+    "target_data_model": "FlowRecord",
+    "field_mapping": {
+      "src_ip": "Source IP",
+      "dst_ip": "Destination IP",
+      "src_port": "Source Port",
+      "dst_port": "Destination Port",
+      "protocol": "Protocol",
+      "timestamp": "Timestamp",
+      "flow_duration": "Flow Duration",
+      "fwd_pkts": "Total Fwd Packets",
+      "bwd_pkts": "Total Backward Packets",
+      "fwd_bytes": "Total Length of Fwd Packets",
+      "bwd_bytes": "Total Length of Bwd Packets",
+      "flow_bytes_s": "Flow Bytes/s",
+      "flow_pkts_s": "Flow Packets/s",
+      "flow_iat_mean": "Flow IAT Mean",
+      "flow_iat_std": "Flow IAT Std",
+      "pkt_len_mean": "Packet Length Mean",
+      "pkt_len_std": "Packet Length Std",
+      "init_win_fwd": "Init_Win_bytes_forward",
+      "init_win_bwd": "Init_Win_bytes_backward",
+      "syn_count": "SYN Flag Count",
+      "rst_count": "RST Flag Count",
+      "ack_count": "ACK Flag Count",
+      "fin_count": "FIN Flag Count",
+      "psh_count": "PSH Flag Count",
+      "label": "Label"
+    },
+    "duplicate_columns_detected": [
+      "Fwd Header Length (indices 40 and 61)"
+    ],
+    "normalization_strategy": "Strip header whitespace, deduplicate columns, cast Infinity/NaN to null on load."
+  },
+  "dataset_summary": {
+    "total_raw_lines": 3119345,
+    "total_valid_flow_records": 2830743,
+    "total_empty_or_corrupt_padding_lines": 288602,
+    "global_unique_classes_count": 15,
+    "global_label_distribution": {
+      "BENIGN": 2273097,
+      "DoS Hulk": 231073,
+      "PortScan": 158930,
+      "DDoS": 128027,
+      "DoS GoldenEye": 10293,
+      "FTP-Patator": 7938,
+      "SSH-Patator": 5897,
+      "DoS slowloris": 5796,
+      "DoS Slowhttptest": 5499,
+      "Bot": 1966,
+      "Web Attack - Brute Force": 1507,
+      "Web Attack - XSS": 652,
+      "Infiltration": 36,
+      "Web Attack - Sql Injection": 21,
+      "Heartbleed": 11
+    }
+  },
+  "per_file_reports": [
+    {
+      "file_name": "Friday-WorkingHours-Afternoon-DDos.pcap_ISCX.csv",
+      "file_size_bytes": 96101069,
+      "file_size_mb": 91.65,
+      "raw_columns_count": 85,
+      "duplicate_columns": [
+        "Fwd Header Length"
+      ],
+      "total_raw_rows": 225745,
+      "valid_rows": 225745,
+      "empty_padding_rows": 0,
+      "datetime_range": {
+        "min_datetime": "2017-07-07T15:30:00",
+        "max_datetime": "2017-07-07T17:02:00",
+        "duration_hours": 1.53,
+        "duration_seconds": 5520.0,
+        "unparsed_timestamp_count": 0
+      },
+      "inf_nan_stats": {
+        "flow_bytes_s": {
+          "infinity": 30,
+          "negative_infinity": 0,
+          "nan": 4,
+          "null": 0,
+          "total_problematic": 34
+        },
+        "flow_pkts_s": {
+          "infinity": 34,
+          "negative_infinity": 0,
+          "nan": 0,
+          "null": 0,
+          "total_problematic": 34
+        }
+      },
+      "label_distribution": {
+        "BENIGN": 97718,
+        "DDoS": 128027
+      },
+      "graph_topology": {
+        "unique_source_ips": 2067,
+        "unique_destination_ips": 2554,
+        "total_unique_hosts": 2567,
+        "unique_directed_pairs_edges": 6963,
+        "graph_density": 0.0010570946490637053,
+        "average_out_degree": 2.71,
+        "flows_per_edge_ratio": 32.42
+      },
+      "inspection_time_seconds": 1.49
+    },
+    {
+      "file_name": "Friday-WorkingHours-Afternoon-PortScan.pcap_ISCX.csv",
+      "file_size_bytes": 101874777,
+      "file_size_mb": 97.16,
+      "raw_columns_count": 85,
+      "duplicate_columns": [
+        "Fwd Header Length"
+      ],
+      "total_raw_rows": 286467,
+      "valid_rows": 286467,
+      "empty_padding_rows": 0,
+      "datetime_range": {
+        "min_datetime": "2017-07-07T13:00:00",
+        "max_datetime": "2017-07-07T15:29:00",
+        "duration_hours": 2.48,
+        "duration_seconds": 8940.0,
+        "unparsed_timestamp_count": 0
+      },
+      "inf_nan_stats": {
+        "flow_bytes_s": {
+          "infinity": 356,
+          "negative_infinity": 0,
+          "nan": 15,
+          "null": 0,
+          "total_problematic": 371
+        },
+        "flow_pkts_s": {
+          "infinity": 371,
+          "negative_infinity": 0,
+          "nan": 0,
+          "null": 0,
+          "total_problematic": 371
+        }
+      },
+      "label_distribution": {
+        "BENIGN": 127537,
+        "PortScan": 158930
+      },
+      "graph_topology": {
+        "unique_source_ips": 3667,
+        "unique_destination_ips": 4401,
+        "total_unique_hosts": 4404,
+        "unique_directed_pairs_edges": 13742,
+        "graph_density": 0.0007086861550717938,
+        "average_out_degree": 3.12,
+        "flows_per_edge_ratio": 20.85
+      },
+      "inspection_time_seconds": 1.45
+    },
+    {
+      "file_name": "Friday-WorkingHours-Morning.pcap_ISCX.csv",
+      "file_size_bytes": 75386737,
+      "file_size_mb": 71.89,
+      "raw_columns_count": 85,
+      "duplicate_columns": [
+        "Fwd Header Length"
+      ],
+      "total_raw_rows": 191033,
+      "valid_rows": 191033,
+      "empty_padding_rows": 0,
+      "datetime_range": {
+        "min_datetime": "2017-07-07T08:59:00",
+        "max_datetime": "2017-07-07T12:59:00",
+        "duration_hours": 4.0,
+        "duration_seconds": 14400.0,
+        "unparsed_timestamp_count": 0
+      },
+      "inf_nan_stats": {
+        "flow_bytes_s": {
+          "infinity": 94,
+          "negative_infinity": 0,
+          "nan": 28,
+          "null": 0,
+          "total_problematic": 122
+        },
+        "flow_pkts_s": {
+          "infinity": 122,
+          "negative_infinity": 0,
+          "nan": 0,
+          "null": 0,
+          "total_problematic": 122
+        }
+      },
+      "label_distribution": {
+        "BENIGN": 189067,
+        "Bot": 1966
+      },
+      "graph_topology": {
+        "unique_source_ips": 4464,
+        "unique_destination_ips": 5348,
+        "total_unique_hosts": 5350,
+        "unique_directed_pairs_edges": 18241,
+        "graph_density": 0.0006374149766835621,
+        "average_out_degree": 3.41,
+        "flows_per_edge_ratio": 10.47
+      },
+      "inspection_time_seconds": 1.18
+    },
+    {
+      "file_name": "Monday-WorkingHours.pcap_ISCX.csv",
+      "file_size_bytes": 268649908,
+      "file_size_mb": 256.2,
+      "raw_columns_count": 85,
+      "duplicate_columns": [
+        "Fwd Header Length"
+      ],
+      "total_raw_rows": 529918,
+      "valid_rows": 529918,
+      "empty_padding_rows": 0,
+      "datetime_range": {
+        "min_datetime": "2017-07-03T08:55:58",
+        "max_datetime": "2017-07-03T17:01:34",
+        "duration_hours": 8.09,
+        "duration_seconds": 29136.0,
+        "unparsed_timestamp_count": 0
+      },
+      "inf_nan_stats": {
+        "flow_bytes_s": {
+          "infinity": 373,
+          "negative_infinity": 0,
+          "nan": 64,
+          "null": 0,
+          "total_problematic": 437
+        },
+        "flow_pkts_s": {
+          "infinity": 437,
+          "negative_infinity": 0,
+          "nan": 0,
+          "null": 0,
+          "total_problematic": 437
+        }
+      },
+      "label_distribution": {
+        "BENIGN": 529918
+      },
+      "graph_topology": {
+        "unique_source_ips": 8239,
+        "unique_destination_ips": 9698,
+        "total_unique_hosts": 9709,
+        "unique_directed_pairs_edges": 39404,
+        "graph_density": 0.0004180575216764162,
+        "average_out_degree": 4.06,
+        "flows_per_edge_ratio": 13.45
+      },
+      "inspection_time_seconds": 3.09
+    },
+    {
+      "file_name": "Thursday-WorkingHours-Afternoon-Infilteration.pcap_ISCX.csv",
+      "file_size_bytes": 108723183,
+      "file_size_mb": 103.69,
+      "raw_columns_count": 85,
+      "duplicate_columns": [
+        "Fwd Header Length"
+      ],
+      "total_raw_rows": 288602,
+      "valid_rows": 288602,
+      "empty_padding_rows": 0,
+      "datetime_range": {
+        "min_datetime": "2017-07-06T13:00:00",
+        "max_datetime": "2017-07-06T17:04:00",
+        "duration_hours": 4.07,
+        "duration_seconds": 14640.0,
+        "unparsed_timestamp_count": 0
+      },
+      "inf_nan_stats": {
+        "flow_bytes_s": {
+          "infinity": 0,
+          "negative_infinity": 0,
+          "nan": 18,
+          "null": 0,
+          "total_problematic": 18
+        },
+        "flow_pkts_s": {
+          "infinity": 0,
+          "negative_infinity": 0,
+          "nan": 0,
+          "null": 0,
+          "total_problematic": 0
+        }
+      },
+      "label_distribution": {
+        "BENIGN": 288566,
+        "Infiltration": 36
+      },
+      "graph_topology": {
+        "unique_source_ips": 5101,
+        "unique_destination_ips": 6054,
+        "total_unique_hosts": 6060,
+        "unique_directed_pairs_edges": 21413,
+        "graph_density": 0.0005831817708920586,
+        "average_out_degree": 3.53,
+        "flows_per_edge_ratio": 13.48
+      },
+      "inspection_time_seconds": 1.58
+    },
+    {
+      "file_name": "Thursday-WorkingHours-Morning-WebAttacks.pcap_ISCX.csv",
+      "file_size_bytes": 92030223,
+      "file_size_mb": 87.77,
+      "raw_columns_count": 85,
+      "duplicate_columns": [
+        "Fwd Header Length"
+      ],
+      "total_raw_rows": 458968,
+      "valid_rows": 170366,
+      "empty_padding_rows": 288602,
+      "datetime_range": {
+        "min_datetime": "2017-07-06T08:59:00",
+        "max_datetime": "2017-07-06T12:59:00",
+        "duration_hours": 4.0,
+        "duration_seconds": 14400.0,
+        "unparsed_timestamp_count": 0
+      },
+      "inf_nan_stats": {
+        "flow_bytes_s": {
+          "infinity": 115,
+          "negative_infinity": 0,
+          "nan": 20,
+          "null": 0,
+          "total_problematic": 135
+        },
+        "flow_pkts_s": {
+          "infinity": 135,
+          "negative_infinity": 0,
+          "nan": 0,
+          "null": 0,
+          "total_problematic": 135
+        }
+      },
+      "label_distribution": {
+        "Web Attack - XSS": 652,
+        "BENIGN": 168186,
+        "Web Attack - Brute Force": 1507,
+        "Web Attack - Sql Injection": 21
+      },
+      "graph_topology": {
+        "unique_source_ips": 4203,
+        "unique_destination_ips": 5214,
+        "total_unique_hosts": 5217,
+        "unique_directed_pairs_edges": 17513,
+        "graph_density": 0.0006435793906424373,
+        "average_out_degree": 3.36,
+        "flows_per_edge_ratio": 9.73
+      },
+      "inspection_time_seconds": 1.31
+    },
+    {
+      "file_name": "Tuesday-WorkingHours.pcap_ISCX.csv",
+      "file_size_bytes": 174696560,
+      "file_size_mb": 166.6,
+      "raw_columns_count": 85,
+      "duplicate_columns": [
+        "Fwd Header Length"
+      ],
+      "total_raw_rows": 445909,
+      "valid_rows": 445909,
+      "empty_padding_rows": 0,
+      "datetime_range": {
+        "min_datetime": "2017-07-04T08:53:00",
+        "max_datetime": "2017-07-04T17:00:00",
+        "duration_hours": 8.12,
+        "duration_seconds": 29220.0,
+        "unparsed_timestamp_count": 0
+      },
+      "inf_nan_stats": {
+        "flow_bytes_s": {
+          "infinity": 63,
+          "negative_infinity": 0,
+          "nan": 201,
+          "null": 0,
+          "total_problematic": 264
+        },
+        "flow_pkts_s": {
+          "infinity": 264,
+          "negative_infinity": 0,
+          "nan": 0,
+          "null": 0,
+          "total_problematic": 264
+        }
+      },
+      "label_distribution": {
+        "BENIGN": 432074,
+        "FTP-Patator": 7938,
+        "SSH-Patator": 5897
+      },
+      "graph_topology": {
+        "unique_source_ips": 7192,
+        "unique_destination_ips": 8490,
+        "total_unique_hosts": 8494,
+        "unique_directed_pairs_edges": 35026,
+        "graph_density": 0.00048553122225256155,
+        "average_out_degree": 4.12,
+        "flows_per_edge_ratio": 12.73
+      },
+      "inspection_time_seconds": 2.17
+    },
+    {
+      "file_name": "Wednesday-workingHours.pcap_ISCX.csv",
+      "file_size_bytes": 285642925,
+      "file_size_mb": 272.41,
+      "raw_columns_count": 85,
+      "duplicate_columns": [
+        "Fwd Header Length"
+      ],
+      "total_raw_rows": 692703,
+      "valid_rows": 692703,
+      "empty_padding_rows": 0,
+      "datetime_range": {
+        "min_datetime": "2017-07-05T08:42:00",
+        "max_datetime": "2017-07-05T17:10:00",
+        "duration_hours": 8.47,
+        "duration_seconds": 30480.0,
+        "unparsed_timestamp_count": 0
+      },
+      "inf_nan_stats": {
+        "flow_bytes_s": {
+          "infinity": 289,
+          "negative_infinity": 0,
+          "nan": 1008,
+          "null": 0,
+          "total_problematic": 1297
+        },
+        "flow_pkts_s": {
+          "infinity": 1297,
+          "negative_infinity": 0,
+          "nan": 0,
+          "null": 0,
+          "total_problematic": 1297
+        }
+      },
+      "label_distribution": {
+        "DoS slowloris": 5796,
+        "Heartbleed": 11,
+        "DoS GoldenEye": 10293,
+        "DoS Slowhttptest": 5499,
+        "BENIGN": 440031,
+        "DoS Hulk": 231073
+      },
+      "graph_topology": {
+        "unique_source_ips": 7689,
+        "unique_destination_ips": 9012,
+        "total_unique_hosts": 9015,
+        "unique_directed_pairs_edges": 35924,
+        "graph_density": 0.00044208054494881385,
+        "average_out_degree": 3.98,
+        "flows_per_edge_ratio": 19.28
+      },
+      "inspection_time_seconds": 3.11
+    }
+  ]
+}
