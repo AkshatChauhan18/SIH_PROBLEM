@@ -1,7 +1,7 @@
 {
   "evaluation_metadata": {
     "project": "SIH26153",
-    "test_windows_count": 484,
+    "test_windows_count": 448,
     "sequence_length": 10,
     "forecast_horizon_k": 5,
     "window_seconds": 30
@@ -16,23 +16,23 @@
         "lead_time_minutes": 0.5
       },
       "world_model": {
-        "macro_f1": 0.06378378378378378,
-        "weighted_f1": 0.17815939606984382,
-        "macro_precision": 0.10925925925925925,
-        "macro_recall": 0.0450381679389313,
-        "false_positive_rate": 0.7748091603053435,
+        "macro_f1": 0.2342353001983961,
+        "weighted_f1": 0.8015839626485973,
+        "macro_precision": 0.24213290399248652,
+        "macro_recall": 0.2746233830031112,
+        "false_positive_rate": 0.19543147208121828,
         "per_class": {
           "BENIGN": {
-            "f1": 0.31891891891891894,
-            "precision": 0.5462962962962963,
-            "recall": 0.22519083969465647,
-            "support": 262
+            "f1": 0.8625850340136054,
+            "precision": 0.9296187683284457,
+            "recall": 0.8045685279187818,
+            "support": 394
           },
           "RECONNAISSANCE": {
-            "f1": 0.0,
-            "precision": 0.0,
-            "recall": 0.0,
-            "support": 27
+            "f1": 0.1016949152542373,
+            "precision": 0.058823529411764705,
+            "recall": 0.375,
+            "support": 8
           },
           "BRUTE_FORCE": {
             "f1": 0.0,
@@ -41,37 +41,37 @@
             "support": 0
           },
           "WEB_EXPLOIT": {
-            "f1": 0.0,
-            "precision": 0.0,
-            "recall": 0.0,
+            "f1": 0.20689655172413793,
+            "precision": 0.2222222222222222,
+            "recall": 0.1935483870967742,
             "support": 0
           },
           "DENIAL_OF_SERVICE": {
             "f1": 0.0,
             "precision": 0.0,
             "recall": 0.0,
-            "support": 21
+            "support": 0
           }
         }
       },
       "baseline": {
-        "macro_f1": 0.23761933780215316,
-        "weighted_f1": 0.37823548748812735,
-        "macro_precision": 0.19983488132094945,
-        "macro_recall": 0.32253725917848053,
-        "false_positive_rate": 0.33969465648854963,
+        "macro_f1": 0.07665543975597357,
+        "weighted_f1": 0.46040000657500024,
+        "macro_precision": 0.12329931972789117,
+        "macro_recall": 0.0693437273386512,
+        "false_positive_rate": 0.6395939086294417,
         "per_class": {
           "BENIGN": {
-            "f1": 0.6325411334552102,
-            "precision": 0.6070175438596491,
-            "recall": 0.6603053435114504,
-            "support": 262
+            "f1": 0.505338078291815,
+            "precision": 0.8452380952380952,
+            "recall": 0.3604060913705584,
+            "support": 394
           },
           "RECONNAISSANCE": {
-            "f1": 0.0,
-            "precision": 0.0,
-            "recall": 0.0,
-            "support": 27
+            "f1": 0.03125,
+            "precision": 0.017857142857142856,
+            "recall": 0.125,
+            "support": 8
           },
           "BRUTE_FORCE": {
             "f1": 0.0,
@@ -80,20 +80,32 @@
             "support": 0
           },
           "WEB_EXPLOIT": {
-            "f1": 0.5555555555555556,
-            "precision": 0.39215686274509803,
-            "recall": 0.9523809523809523,
+            "f1": 0.0,
+            "precision": 0.0,
+            "recall": 0.0,
             "support": 0
           },
           "DENIAL_OF_SERVICE": {
             "f1": 0.0,
             "precision": 0.0,
             "recall": 0.0,
-            "support": 21
+            "support": 0
+          },
+          "BOTNET": {
+            "f1": 0.0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "support": 31
+          },
+          "INFILTRATION": {
+            "f1": 0.0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "support": 0
           }
         }
       },
-      "f1_improvement": -0.1738
+      "f1_improvement": 0.1576
     },
     {
       "horizon_step": 2,
@@ -104,23 +116,23 @@
         "lead_time_minutes": 1.0
       },
       "world_model": {
-        "macro_f1": 0.06842105263157895,
-        "weighted_f1": 0.19111210862978342,
-        "macro_precision": 0.11016949152542373,
-        "macro_recall": 0.04961832061068702,
-        "false_positive_rate": 0.7519083969465649,
+        "macro_f1": 0.21179983699165286,
+        "weighted_f1": 0.7874701596519874,
+        "macro_precision": 0.2260636104839501,
+        "macro_recall": 0.25222285901424596,
+        "false_positive_rate": 0.21065989847715735,
         "per_class": {
           "BENIGN": {
-            "f1": 0.34210526315789475,
-            "precision": 0.5508474576271186,
-            "recall": 0.2480916030534351,
-            "support": 262
+            "f1": 0.8543956043956044,
+            "precision": 0.9311377245508982,
+            "recall": 0.7893401015228426,
+            "support": 394
           },
           "RECONNAISSANCE": {
-            "f1": 0.0,
-            "precision": 0.0,
-            "recall": 0.0,
-            "support": 27
+            "f1": 0.08695652173913043,
+            "precision": 0.04918032786885246,
+            "recall": 0.375,
+            "support": 8
           },
           "BRUTE_FORCE": {
             "f1": 0.0,
@@ -129,37 +141,37 @@
             "support": 0
           },
           "WEB_EXPLOIT": {
-            "f1": 0.0,
-            "precision": 0.0,
-            "recall": 0.0,
+            "f1": 0.11764705882352941,
+            "precision": 0.15,
+            "recall": 0.0967741935483871,
             "support": 0
           },
           "DENIAL_OF_SERVICE": {
             "f1": 0.0,
             "precision": 0.0,
             "recall": 0.0,
-            "support": 21
+            "support": 0
           }
         }
       },
       "baseline": {
-        "macro_f1": 0.23133252082063782,
-        "weighted_f1": 0.3749491638178915,
-        "macro_precision": 0.19521155830753353,
-        "macro_recall": 0.31225009087604505,
-        "false_positive_rate": 0.3435114503816794,
+        "macro_f1": 0.0761470513472293,
+        "weighted_f1": 0.4571618189738069,
+        "macro_precision": 0.12244897959183675,
+        "macro_recall": 0.0689811457577955,
+        "false_positive_rate": 0.6421319796954315,
         "per_class": {
           "BENIGN": {
-            "f1": 0.6288848263254113,
-            "precision": 0.6035087719298246,
-            "recall": 0.6564885496183206,
-            "support": 262
+            "f1": 0.501779359430605,
+            "precision": 0.8392857142857143,
+            "recall": 0.35786802030456855,
+            "support": 394
           },
           "RECONNAISSANCE": {
-            "f1": 0.0,
-            "precision": 0.0,
-            "recall": 0.0,
-            "support": 27
+            "f1": 0.03125,
+            "precision": 0.017857142857142856,
+            "recall": 0.125,
+            "support": 8
           },
           "BRUTE_FORCE": {
             "f1": 0.0,
@@ -168,20 +180,32 @@
             "support": 0
           },
           "WEB_EXPLOIT": {
-            "f1": 0.5277777777777778,
-            "precision": 0.37254901960784315,
-            "recall": 0.9047619047619048,
+            "f1": 0.0,
+            "precision": 0.0,
+            "recall": 0.0,
             "support": 0
           },
           "DENIAL_OF_SERVICE": {
             "f1": 0.0,
             "precision": 0.0,
             "recall": 0.0,
-            "support": 21
+            "support": 0
+          },
+          "BOTNET": {
+            "f1": 0.0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "support": 31
+          },
+          "INFILTRATION": {
+            "f1": 0.0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "support": 0
           }
         }
       },
-      "f1_improvement": -0.1629
+      "f1_improvement": 0.1357
     },
     {
       "horizon_step": 3,
@@ -192,23 +216,23 @@
         "lead_time_minutes": 1.5
       },
       "world_model": {
-        "macro_f1": 0.07216494845360824,
-        "weighted_f1": 0.2008001230958609,
-        "macro_precision": 0.11023622047244094,
-        "macro_recall": 0.053639846743295014,
-        "false_positive_rate": 0.7318007662835249,
+        "macro_f1": 0.20542069193295354,
+        "weighted_f1": 0.7836901940346637,
+        "macro_precision": 0.21799188640973627,
+        "macro_recall": 0.24678647453741606,
+        "false_positive_rate": 0.20558375634517767,
         "per_class": {
           "BENIGN": {
-            "f1": 0.36082474226804123,
-            "precision": 0.5511811023622047,
-            "recall": 0.2681992337164751,
-            "support": 261
+            "f1": 0.8528610354223434,
+            "precision": 0.9205882352941176,
+            "recall": 0.7944162436548223,
+            "support": 394
           },
           "RECONNAISSANCE": {
-            "f1": 0.0,
-            "precision": 0.0,
-            "recall": 0.0,
-            "support": 27
+            "f1": 0.09090909090909091,
+            "precision": 0.05172413793103448,
+            "recall": 0.375,
+            "support": 8
           },
           "BRUTE_FORCE": {
             "f1": 0.0,
@@ -217,37 +241,37 @@
             "support": 0
           },
           "WEB_EXPLOIT": {
-            "f1": 0.0,
-            "precision": 0.0,
-            "recall": 0.0,
+            "f1": 0.08333333333333333,
+            "precision": 0.11764705882352941,
+            "recall": 0.06451612903225806,
             "support": 0
           },
           "DENIAL_OF_SERVICE": {
             "f1": 0.0,
             "precision": 0.0,
             "recall": 0.0,
-            "support": 21
+            "support": 0
           }
         }
       },
       "baseline": {
-        "macro_f1": 0.22454212454212455,
-        "weighted_f1": 0.36892851285175376,
-        "macro_precision": 0.18988648090815272,
-        "macro_recall": 0.30169677066228784,
-        "false_positive_rate": 0.3486590038314176,
+        "macro_f1": 0.07665543975597357,
+        "weighted_f1": 0.46040000657500024,
+        "macro_precision": 0.12329931972789117,
+        "macro_recall": 0.0693437273386512,
+        "false_positive_rate": 0.6395939086294417,
         "per_class": {
           "BENIGN": {
-            "f1": 0.6227106227106227,
-            "precision": 0.5964912280701754,
-            "recall": 0.6513409961685823,
-            "support": 261
+            "f1": 0.505338078291815,
+            "precision": 0.8452380952380952,
+            "recall": 0.3604060913705584,
+            "support": 394
           },
           "RECONNAISSANCE": {
-            "f1": 0.0,
-            "precision": 0.0,
-            "recall": 0.0,
-            "support": 27
+            "f1": 0.03125,
+            "precision": 0.017857142857142856,
+            "recall": 0.125,
+            "support": 8
           },
           "BRUTE_FORCE": {
             "f1": 0.0,
@@ -256,20 +280,32 @@
             "support": 0
           },
           "WEB_EXPLOIT": {
-            "f1": 0.5,
-            "precision": 0.35294117647058826,
-            "recall": 0.8571428571428571,
+            "f1": 0.0,
+            "precision": 0.0,
+            "recall": 0.0,
             "support": 0
           },
           "DENIAL_OF_SERVICE": {
             "f1": 0.0,
             "precision": 0.0,
             "recall": 0.0,
-            "support": 21
+            "support": 0
+          },
+          "BOTNET": {
+            "f1": 0.0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "support": 31
+          },
+          "INFILTRATION": {
+            "f1": 0.0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "support": 0
           }
         }
       },
-      "f1_improvement": -0.1524
+      "f1_improvement": 0.1288
     },
     {
       "horizon_step": 4,
@@ -280,23 +316,23 @@
         "lead_time_minutes": 2.0
       },
       "world_model": {
-        "macro_f1": 0.08353808353808354,
-        "weighted_f1": 0.23155545543605244,
-        "macro_precision": 0.11564625850340135,
-        "macro_recall": 0.06538461538461539,
-        "false_positive_rate": 0.6730769230769231,
+        "macro_f1": 0.19991996360249542,
+        "weighted_f1": 0.8020006920886277,
+        "macro_precision": 0.21007130124777182,
+        "macro_recall": 0.22345668904535776,
+        "false_positive_rate": 0.1649746192893401,
         "per_class": {
           "BENIGN": {
-            "f1": 0.4176904176904177,
-            "precision": 0.5782312925170068,
-            "recall": 0.3269230769230769,
-            "support": 260
+            "f1": 0.8761651131824234,
+            "precision": 0.9215686274509803,
+            "recall": 0.8350253807106599,
+            "support": 394
           },
           "RECONNAISSANCE": {
-            "f1": 0.0,
-            "precision": 0.0,
-            "recall": 0.0,
-            "support": 27
+            "f1": 0.07692307692307693,
+            "precision": 0.045454545454545456,
+            "recall": 0.25,
+            "support": 8
           },
           "BRUTE_FORCE": {
             "f1": 0.0,
@@ -305,37 +341,37 @@
             "support": 0
           },
           "WEB_EXPLOIT": {
-            "f1": 0.0,
-            "precision": 0.0,
-            "recall": 0.0,
+            "f1": 0.046511627906976744,
+            "precision": 0.08333333333333333,
+            "recall": 0.03225806451612903,
             "support": 0
           },
           "DENIAL_OF_SERVICE": {
             "f1": 0.0,
             "precision": 0.0,
             "recall": 0.0,
-            "support": 21
+            "support": 0
           }
         }
       },
       "baseline": {
-        "macro_f1": 0.21407747196738022,
-        "weighted_f1": 0.3527496853869577,
-        "macro_precision": 0.18105263157894735,
-        "macro_recall": 0.2872893772893773,
-        "false_positive_rate": 0.3730769230769231,
+        "macro_f1": 0.08162811387900357,
+        "weighted_f1": 0.4642155613817363,
+        "macro_precision": 0.12670068027210885,
+        "macro_recall": 0.08756345177664973,
+        "false_positive_rate": 0.6370558375634517,
         "per_class": {
           "BENIGN": {
-            "f1": 0.5981651376146789,
-            "precision": 0.5719298245614035,
-            "recall": 0.6269230769230769,
-            "support": 260
+            "f1": 0.5088967971530249,
+            "precision": 0.8511904761904762,
+            "recall": 0.3629441624365482,
+            "support": 394
           },
           "RECONNAISSANCE": {
-            "f1": 0.0,
-            "precision": 0.0,
-            "recall": 0.0,
-            "support": 27
+            "f1": 0.0625,
+            "precision": 0.03571428571428571,
+            "recall": 0.25,
+            "support": 8
           },
           "BRUTE_FORCE": {
             "f1": 0.0,
@@ -344,20 +380,32 @@
             "support": 0
           },
           "WEB_EXPLOIT": {
-            "f1": 0.4722222222222222,
-            "precision": 0.3333333333333333,
-            "recall": 0.8095238095238095,
+            "f1": 0.0,
+            "precision": 0.0,
+            "recall": 0.0,
             "support": 0
           },
           "DENIAL_OF_SERVICE": {
             "f1": 0.0,
             "precision": 0.0,
             "recall": 0.0,
-            "support": 21
+            "support": 0
+          },
+          "BOTNET": {
+            "f1": 0.0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "support": 31
+          },
+          "INFILTRATION": {
+            "f1": 0.0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "support": 0
           }
         }
       },
-      "f1_improvement": -0.1305
+      "f1_improvement": 0.1183
     },
     {
       "horizon_step": 5,
@@ -368,23 +416,23 @@
         "lead_time_minutes": 2.5
       },
       "world_model": {
-        "macro_f1": 0.08741092636579573,
-        "weighted_f1": 0.24135852802495836,
-        "macro_precision": 0.11358024691358024,
-        "macro_recall": 0.07104247104247105,
-        "false_positive_rate": 0.6447876447876448,
+        "macro_f1": 0.19719942056977308,
+        "weighted_f1": 0.8033516849309112,
+        "macro_precision": 0.1954471544715447,
+        "macro_recall": 0.22055837563451774,
+        "false_positive_rate": 0.14720812182741116,
         "per_class": {
           "BENIGN": {
-            "f1": 0.43705463182897863,
-            "precision": 0.5679012345679012,
-            "recall": 0.3552123552123552,
-            "support": 259
+            "f1": 0.8807339449541285,
+            "precision": 0.9105691056910569,
+            "recall": 0.8527918781725888,
+            "support": 394
           },
           "RECONNAISSANCE": {
-            "f1": 0.0,
-            "precision": 0.0,
-            "recall": 0.0,
-            "support": 27
+            "f1": 0.10526315789473684,
+            "precision": 0.06666666666666667,
+            "recall": 0.25,
+            "support": 8
           },
           "BRUTE_FORCE": {
             "f1": 0.0,
@@ -402,28 +450,28 @@
             "f1": 0.0,
             "precision": 0.0,
             "recall": 0.0,
-            "support": 21
+            "support": 0
           }
         }
       },
       "baseline": {
-        "macro_f1": 0.21094771241830065,
-        "weighted_f1": 0.35692859233245544,
-        "macro_precision": 0.17923632610939114,
-        "macro_recall": 0.2805662805662806,
-        "false_positive_rate": 0.3590733590733591,
+        "macro_f1": 0.08264489069649213,
+        "weighted_f1": 0.470691936584123,
+        "macro_precision": 0.1284013605442177,
+        "macro_recall": 0.08828861493836114,
+        "false_positive_rate": 0.631979695431472,
         "per_class": {
           "BENIGN": {
-            "f1": 0.6102941176470589,
-            "precision": 0.5824561403508772,
-            "recall": 0.640926640926641,
-            "support": 259
+            "f1": 0.5160142348754448,
+            "precision": 0.8630952380952381,
+            "recall": 0.3680203045685279,
+            "support": 394
           },
           "RECONNAISSANCE": {
-            "f1": 0.0,
-            "precision": 0.0,
-            "recall": 0.0,
-            "support": 27
+            "f1": 0.0625,
+            "precision": 0.03571428571428571,
+            "recall": 0.25,
+            "support": 8
           },
           "BRUTE_FORCE": {
             "f1": 0.0,
@@ -432,20 +480,32 @@
             "support": 0
           },
           "WEB_EXPLOIT": {
-            "f1": 0.4444444444444444,
-            "precision": 0.3137254901960784,
-            "recall": 0.7619047619047619,
+            "f1": 0.0,
+            "precision": 0.0,
+            "recall": 0.0,
             "support": 0
           },
           "DENIAL_OF_SERVICE": {
             "f1": 0.0,
             "precision": 0.0,
             "recall": 0.0,
-            "support": 21
+            "support": 0
+          },
+          "BOTNET": {
+            "f1": 0.0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "support": 31
+          },
+          "INFILTRATION": {
+            "f1": 0.0,
+            "precision": 0.0,
+            "recall": 0.0,
+            "support": 0
           }
         }
       },
-      "f1_improvement": -0.1235
+      "f1_improvement": 0.1146
     }
   ]
 }

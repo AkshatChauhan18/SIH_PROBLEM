@@ -60,15 +60,8 @@ training:
   use_amp: true                  # Mixed precision (torch.amp) for RTX 4060
   device: "cuda"                 # Auto-falls back to cpu if cuda unavailable
 
-splits:
-  train_days:
-    - "Monday-WorkingHours"
-    - "Tuesday-WorkingHours"
-    - "Wednesday-workingHours"
-  val_days:
-    - "Thursday-WorkingHours-Morning-WebAttacks"
-    - "Thursday-WorkingHours-Afternoon-Infilteration"
-  test_days:
-    - "Friday-WorkingHours-Morning"
-    - "Friday-WorkingHours-Afternoon-PortScan"
-    - "Friday-WorkingHours-Afternoon-DDos"
+split:
+  strategy: "chronological"
+  train_ratio: 0.70
+  val_ratio: 0.15
+  test_ratio: 0.15
