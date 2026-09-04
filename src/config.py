@@ -24,12 +24,12 @@ STAGE_NAMES = [
 ]
 
 STAGE_COLORS = {
-    "Normal": "#00E676",            # Bright Green
-    "Reconnaissance": "#00B0FF",     # Cyan / Sky Blue
-    "Initial Access": "#FFD600",     # Amber / Gold
-    "Lateral Movement": "#FF9100",    # Orange
-    "Command & Control": "#FF3D00",   # Deep Orange / Red
-    "Impact": "#D50000"              # Crimson Red
+    "Normal": "#00FF66",            # Terminal Green
+    "Reconnaissance": "#00F0FF",     # Electric Cyan
+    "Initial Access": "#FFE600",     # Acid Yellow
+    "Lateral Movement": "#FF6B00",    # Hazard Orange
+    "Command & Control": "#FF0077",   # Neon Magenta / Crimson
+    "Impact": "#FF2A55"              # Alert Red
 }
 
 LABEL_TO_STAGE = {
