@@ -11,12 +11,12 @@ data/
 *.parquet
 
 # --- Trained Weights & Serialized Checkpoints ---
-models/*.pt
-models/*.pth
-models/*.pkl
-models/*.bin
-models/*.onnx
-!models/.gitkeep
+# models/*.pt
+# models/*.pth
+# models/*.pkl
+# models/*.bin
+# models/*.onnx
+# !models/.gitkeep
 
 # --- Python Virtual Environments ---
 .venv/
