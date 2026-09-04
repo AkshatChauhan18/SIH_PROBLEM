@@ -1,0 +1,43 @@
+{
+  "metrics": [
+    {
+      "metric": "Precision",
+      "logistic_regression": 1.0,
+      "sentinel_x": 1.0,
+      "format": "{:.1%}"
+    },
+    {
+      "metric": "Recall",
+      "logistic_regression": 1.0,
+      "sentinel_x": 0.4444,
+      "format": "{:.1%}"
+    },
+    {
+      "metric": "F1-Score",
+      "logistic_regression": 1.0,
+      "sentinel_x": 0.6154,
+      "format": "{:.1%}"
+    },
+    {
+      "metric": "False Positive Rate (FPR)",
+      "logistic_regression": 0.0,
+      "sentinel_x": 0.0,
+      "format": "{:.1%}"
+    },
+    {
+      "metric": "ROC-AUC",
+      "logistic_regression": 1.0,
+      "sentinel_x": 1.0,
+      "format": "{:.3f}"
+    },
+    {
+      "metric": "Mean Early Warning Time",
+      "logistic_regression": 0.0,
+      "sentinel_x": 20.0,
+      "format": "{:.0f}s"
+    }
+  ],
+  "interpretation": "Logistic Regression evaluates the current network state in isolation, while Sentinel-X uses historical state sequences to forecast future attack progression before malicious payloads trigger detection rules.",
+  "sample_size": 160,
+  "evaluation_dataset": "CIC-IDS2017 Chronological Test Split (PortScan, DDoS, WebAttacks, Patator, Benign)"
+}
