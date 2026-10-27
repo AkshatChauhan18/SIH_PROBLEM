@@ -1,10 +1,10 @@
 {
   "metadata": {
     "project": "SIH26153 \u2014 AI-Based Network Attack Forecasting via World Model",
-    "generated_at": "2026-09-03T23:17:30.605862",
-    "target_directory": "D:\\sih_project\\data\\cic2017",
+    "generated_at": "2026-10-27T15:35:28.472743",
+    "target_directory": "E:\\Projects\\Evaluating the Accuracy and Reliability of Automated DFIR-to- ATT&CK Correlation in Simulated Multi-Stage Attacks\\SIH_PROBLEM\\data\\cic2017",
     "total_files_scanned": 8,
-    "overall_elapsed_seconds": 15.38
+    "overall_elapsed_seconds": 40.09
   },
   "schema_specification": {
     "target_data_model": "FlowRecord",
@@ -99,8 +99,8 @@
         }
       },
       "label_distribution": {
-        "BENIGN": 97718,
-        "DDoS": 128027
+        "DDoS": 128027,
+        "BENIGN": 97718
       },
       "graph_topology": {
         "unique_source_ips": 2067,
@@ -111,7 +111,7 @@
         "average_out_degree": 2.71,
         "flows_per_edge_ratio": 32.42
       },
-      "inspection_time_seconds": 1.49
+      "inspection_time_seconds": 4.24
     },
     {
       "file_name": "Friday-WorkingHours-Afternoon-PortScan.pcap_ISCX.csv",
@@ -148,8 +148,8 @@
         }
       },
       "label_distribution": {
-        "BENIGN": 127537,
-        "PortScan": 158930
+        "PortScan": 158930,
+        "BENIGN": 127537
       },
       "graph_topology": {
         "unique_source_ips": 3667,
@@ -160,7 +160,7 @@
         "average_out_degree": 3.12,
         "flows_per_edge_ratio": 20.85
       },
-      "inspection_time_seconds": 1.45
+      "inspection_time_seconds": 4.1
     },
     {
       "file_name": "Friday-WorkingHours-Morning.pcap_ISCX.csv",
@@ -209,7 +209,7 @@
         "average_out_degree": 3.41,
         "flows_per_edge_ratio": 10.47
       },
-      "inspection_time_seconds": 1.18
+      "inspection_time_seconds": 3.64
     },
     {
       "file_name": "Monday-WorkingHours.pcap_ISCX.csv",
@@ -257,7 +257,7 @@
         "average_out_degree": 4.06,
         "flows_per_edge_ratio": 13.45
       },
-      "inspection_time_seconds": 3.09
+      "inspection_time_seconds": 6.37
     },
     {
       "file_name": "Thursday-WorkingHours-Afternoon-Infilteration.pcap_ISCX.csv",
@@ -306,7 +306,7 @@
         "average_out_degree": 3.53,
         "flows_per_edge_ratio": 13.48
       },
-      "inspection_time_seconds": 1.58
+      "inspection_time_seconds": 4.01
     },
     {
       "file_name": "Thursday-WorkingHours-Morning-WebAttacks.pcap_ISCX.csv",
@@ -343,9 +343,9 @@
         }
       },
       "label_distribution": {
-        "Web Attack - XSS": 652,
         "BENIGN": 168186,
         "Web Attack - Brute Force": 1507,
+        "Web Attack - XSS": 652,
         "Web Attack - Sql Injection": 21
       },
       "graph_topology": {
@@ -357,7 +357,7 @@
         "average_out_degree": 3.36,
         "flows_per_edge_ratio": 9.73
       },
-      "inspection_time_seconds": 1.31
+      "inspection_time_seconds": 4.36
     },
     {
       "file_name": "Tuesday-WorkingHours.pcap_ISCX.csv",
@@ -395,8 +395,8 @@
       },
       "label_distribution": {
         "BENIGN": 432074,
-        "FTP-Patator": 7938,
-        "SSH-Patator": 5897
+        "SSH-Patator": 5897,
+        "FTP-Patator": 7938
       },
       "graph_topology": {
         "unique_source_ips": 7192,
@@ -407,7 +407,7 @@
         "average_out_degree": 4.12,
         "flows_per_edge_ratio": 12.73
       },
-      "inspection_time_seconds": 2.17
+      "inspection_time_seconds": 5.81
     },
     {
       "file_name": "Wednesday-workingHours.pcap_ISCX.csv",
@@ -444,12 +444,12 @@
         }
       },
       "label_distribution": {
-        "DoS slowloris": 5796,
-        "Heartbleed": 11,
-        "DoS GoldenEye": 10293,
-        "DoS Slowhttptest": 5499,
+        "DoS Hulk": 231073,
         "BENIGN": 440031,
-        "DoS Hulk": 231073
+        "DoS GoldenEye": 10293,
+        "DoS slowloris": 5796,
+        "DoS Slowhttptest": 5499,
+        "Heartbleed": 11
       },
       "graph_topology": {
         "unique_source_ips": 7689,
@@ -460,7 +460,7 @@
         "average_out_degree": 3.98,
         "flows_per_edge_ratio": 19.28
       },
-      "inspection_time_seconds": 3.11
+      "inspection_time_seconds": 7.55
     }
   ]
 }

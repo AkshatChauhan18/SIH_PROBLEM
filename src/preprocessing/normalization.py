@@ -5,7 +5,7 @@ Fitted exclusively on training data (Days 1–3).
 """
 
 from pathlib import Path
-from typing import Dict, Any, List, Optional
+from typing import Dict, Any, List, Optional, Union
 import pickle
 import numpy as np
 from sklearn.preprocessing import RobustScaler

@@ -43,30 +43,32 @@ if sys.stdout.encoding and sys.stdout.encoding.lower() != "utf-8":
 
 class TemporalGraphSequenceDataset(Dataset):
     """
-    Constructs chronological sequences of N graph states predicting the (N+1)-th state:
-    Sequence: [S[t-N+1], ..., S[t]] -> Target: S[t+1], y[t+1]
+    Constructs chronological sequences of N graph states predicting multi-step horizons:
+    Sequence: [S[t-N+1], ..., S[t]] -> Target t+1: S[t+1], Target t+2: S[t+2]
     """
 
     def __init__(self, graphs: List, seq_len: int = 10):
         self.graphs = graphs
         self.seq_len = seq_len
-        self.valid_indices = range(len(graphs) - seq_len)
+        self.valid_indices = range(max(0, len(graphs) - seq_len - 1))
 
     def __len__(self):
         return len(self.valid_indices)
 
     def __getitem__(self, idx: int):
         seq_graphs = [self.graphs[idx + i] for i in range(self.seq_len)]
-        target_graph = self.graphs[idx + self.seq_len]
-        return seq_graphs, target_graph
+        t1_graph = self.graphs[idx + self.seq_len]
+        t2_graph = self.graphs[idx + self.seq_len + 1]
+        return seq_graphs, t1_graph, t2_graph
 
 def collate_temporal_batch(batch):
     """Custom collator preserving sequence structure of PyG graph windows."""
-    seq_list, target_list = [], []
-    for seq_graphs, target_g in batch:
+    seq_list, t1_list, t2_list = [], [], []
+    for seq_graphs, t1_g, t2_g in batch:
         seq_list.append(seq_graphs)
-        target_list.append(target_g)
-    return seq_list, target_list
+        t1_list.append(t1_g)
+        t2_list.append(t2_g)
+    return seq_list, t1_list, t2_list
 
 def main():
     parser = argparse.ArgumentParser(description="Train World Model on temporal graph sequences.")
@@ -128,9 +130,10 @@ def main():
     train_targets = [int(g.y.item()) for g in train_graphs]
     class_counts = np.bincount(train_targets, minlength=num_classes)
     total_samples = len(train_targets)
-    weights = total_samples / (num_classes * np.maximum(class_counts, 1.0))
-    weights[0] = 0.20   # Downweight majority BENIGN so all attacks are actively prioritized
-    weights = np.clip(weights, 0.20, 5.0)
+    # Effective class weighting: Normalized to BENIGN = 1.0, attacks boosted 1.0x - 3.5x
+    raw_w = np.sqrt(total_samples / np.maximum(class_counts, 1.0))
+    weights = raw_w / raw_w[0]
+    weights = np.clip(weights, 1.0, 3.5)
     class_weights_tensor = torch.tensor(weights, dtype=torch.float32).to(device)
     print(f"      Fitted Class Weights: {dict(zip(class_names, [round(float(w), 3) for w in weights]))}")
 
@@ -163,6 +166,7 @@ def main():
     ).to(device)
 
     optimizer = torch.optim.AdamW(system.parameters(), lr=lr, weight_decay=weight_decay)
+    scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=epochs, eta_min=1e-5)
     use_bf16 = use_amp and (device.type == "cuda") and torch.cuda.is_bf16_supported()
     scaler = torch.amp.GradScaler("cuda", enabled=(use_amp and not use_bf16))
 
@@ -175,6 +179,7 @@ def main():
     print("\n[3/4] Starting training epochs ...")
     best_train_loss = float("inf")
     best_val_loss = float("inf")
+    best_val_f1 = -1.0
 
     for epoch in range(1, epochs + 1):
         system.train()
@@ -183,30 +188,34 @@ def main():
         train_ce_loss = 0.0
         epoch_start = time.time()
 
-        for seq_batch, target_batch in train_loader:
+        for seq_batch, t1_batch, t2_batch in train_loader:
             optimizer.zero_grad()
 
             with get_autocast_context(device, use_amp):
-                # Vectorized batch encoding: flatten all B * N graphs into a single PyG Batch
+                # 1. Encode historical sequences
                 flat_seq_graphs = [g for seq in seq_batch for g in seq]
                 batch_graphs = Batch.from_data_list(flat_seq_graphs).to(device)
-                z_all = system.encode_graph(batch_graphs)  # [B * N, 128]
-                z_history = z_all.view(len(seq_batch), seq_len, -1)  # [B, N, 128]
+                z_all = system.encode_graph(batch_graphs)
+                z_history = z_all.view(len(seq_batch), seq_len, -1)
 
-                # Vectorized target graph encoding: B target graphs in one GPU call
-                target_batch_graphs = Batch.from_data_list(target_batch).to(device)
-                actual_z_next = system.encode_graph(target_batch_graphs)  # [B, 128]
-                target_y_next = torch.tensor(
-                    [int(g.y.item()) for g in target_batch], dtype=torch.long, device=device
-                )
+                # 2. Encode ground truth future states t+1 and t+2
+                actual_z_t1 = system.encode_graph(Batch.from_data_list(t1_batch).to(device))
+                actual_z_t2 = system.encode_graph(Batch.from_data_list(t2_batch).to(device))
+                target_y_t1 = torch.tensor([int(g.y.item()) for g in t1_batch], dtype=torch.long, device=device)
+                target_y_t2 = torch.tensor([int(g.y.item()) for g in t2_batch], dtype=torch.long, device=device)
 
-                # Predict next latent state via World Model
-                pred_z_next, _ = system.world_model(z_history)  # [B, 128]
+                # 3. Forecast t+1
+                pred_z_t1, _ = system.world_model(z_history)
+                loss_t1, mse_1, ce_1 = system.compute_dual_loss(pred_z_t1, actual_z_t1, target_y_t1)
 
-                # Compute Dual Loss
-                loss, mse, ce = system.compute_dual_loss(
-                    pred_z_next, actual_z_next, target_y_next
-                )
+                # 4. Multi-step recursive rollout for t+2: slide predicted z_t1 into history
+                seq_t2 = torch.cat([z_history[:, 1:, :], pred_z_t1.unsqueeze(1)], dim=1)
+                pred_z_t2, _ = system.world_model(seq_t2)
+                loss_t2, mse_2, ce_2 = system.compute_dual_loss(pred_z_t2, actual_z_t2, target_y_t2)
+
+                loss = loss_t1 + 0.5 * loss_t2
+                mse = mse_1 + 0.5 * mse_2
+                ce = ce_1 + 0.5 * ce_2
 
             scaler.scale(loss).backward()
             scaler.unscale_(optimizer)
@@ -217,6 +226,8 @@ def main():
             train_total_loss += loss.item()
             train_mse_loss += mse.item()
             train_ce_loss += ce.item()
+
+        scheduler.step()
 
         avg_train_loss = train_total_loss / max(len(train_loader), 1)
         avg_train_mse = train_mse_loss / max(len(train_loader), 1)
@@ -229,27 +240,24 @@ def main():
         val_y_pred = []
 
         with torch.no_grad():
-            for seq_batch, target_batch in val_loader:
+            for seq_batch, t1_batch, t2_batch in val_loader:
                 with get_autocast_context(device, use_amp):
                     flat_seq_graphs = [g for seq in seq_batch for g in seq]
                     batch_graphs = Batch.from_data_list(flat_seq_graphs).to(device)
                     z_all = system.encode_graph(batch_graphs)
                     z_history = z_all.view(len(seq_batch), seq_len, -1)
 
-                    target_batch_graphs = Batch.from_data_list(target_batch).to(device)
-                    actual_z_next = system.encode_graph(target_batch_graphs)
-                    target_y_next = torch.tensor(
-                        [int(g.y.item()) for g in target_batch], dtype=torch.long, device=device
-                    )
+                    actual_z_t1 = system.encode_graph(Batch.from_data_list(t1_batch).to(device))
+                    target_y_t1 = torch.tensor([int(g.y.item()) for g in t1_batch], dtype=torch.long, device=device)
 
-                    pred_z_next, _ = system.world_model(z_history)
-                    v_loss, _, _ = system.compute_dual_loss(pred_z_next, actual_z_next, target_y_next)
+                    pred_z_t1, _ = system.world_model(z_history)
+                    v_loss, _, _ = system.compute_dual_loss(pred_z_t1, actual_z_t1, target_y_t1)
 
-                    logits = system.threat_head(pred_z_next)
+                    logits = system.threat_head(pred_z_t1)
                     preds = torch.argmax(logits, dim=-1)
 
                     val_total_loss += v_loss.item()
-                    val_y_true.extend(target_y_next.cpu().numpy().tolist())
+                    val_y_true.extend(target_y_t1.cpu().numpy().tolist())
                     val_y_pred.extend(preds.cpu().numpy().tolist())
 
         avg_val_loss = val_total_loss / max(len(val_loader), 1)
@@ -262,9 +270,10 @@ def main():
             f"Val Loss: {avg_val_loss:.4f} | Val Macro F1: {val_metrics['macro_f1']:.4f} | FPR: {val_metrics['false_positive_rate']:.4f}"
         )
 
-        # Save best model checkpoint based on training convergence
-        # (Avoids discarding trained epochs due to Thursday unseen-class validation shifts)
-        if avg_train_loss < best_train_loss:
+        # Save best model checkpoint based on validation Macro F1 score
+        current_val_f1 = val_metrics["macro_f1"]
+        if current_val_f1 > best_val_f1 or (current_val_f1 == best_val_f1 and avg_train_loss < best_train_loss):
+            best_val_f1 = current_val_f1
             best_train_loss = avg_train_loss
             torch.save(
                 {

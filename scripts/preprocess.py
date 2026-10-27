@@ -107,7 +107,7 @@ def main():
     print(f"      Saved preprocessors to: {preproc_path.resolve()}\n")
 
     # 2. Window each file and partition chronologically: 70% Train, 15% Val, 15% Test
-    print("[2/4] Partitioning flows into 30s windows with chronological 70/15/15 split per file ...")
+    print("[2/4] Partitioning flows into 30s windows with episodic chronological 70/15/15 split per file ...")
     train_windows = []
     val_windows = []
     test_windows = []
@@ -116,20 +116,38 @@ def main():
         df = loaded_dfs[fp.name]
         df_clean = clean_and_impute_flows(df, medians=preprocessors.flow_medians)
         windows = partition_flows_into_windows(df_clean, window_seconds=window_sec)
-        
-        n_win = len(windows)
-        n_tr = int(0.70 * n_win)
-        n_vl = int(0.15 * n_win)
-        
-        file_tr = windows[:n_tr]
-        file_vl = windows[n_tr : n_tr + n_vl]
-        file_ts = windows[n_tr + n_vl :]
-        
+        current_cat = None
+        block = []
+        blocks = []
+        for w in windows:
+            if w["target_category"] != current_cat:
+                if block:
+                    blocks.append(block)
+                current_cat = w["target_category"]
+                block = [w]
+            else:
+                block.append(w)
+        if block:
+            blocks.append(block)
+        file_tr, file_vl, file_ts = [], [], []
+        for blk in blocks:
+            n = len(blk)
+            if n == 1:
+                file_tr.append(blk[0])
+            elif n == 2:
+                file_tr.append(blk[0])
+                file_vl.append(blk[1])
+            else:
+                n_vl = max(1, int(round(0.15 * n)))
+                n_ts = max(1, int(round(0.15 * n)))
+                n_tr = max(1, n - n_vl - n_ts)
+                file_tr.extend(blk[:n_tr])
+                file_vl.extend(blk[n_tr:n_tr+n_vl])
+                file_ts.extend(blk[n_tr+n_vl:])
         train_windows.extend(file_tr)
         val_windows.extend(file_vl)
         test_windows.extend(file_ts)
-        print(f"  [✓] {fp.name}: {n_win} windows -> {len(file_tr)} Train | {len(file_vl)} Val | {len(file_ts)} Test")
-
+        print(f"  [✓] {fp.name}: {len(windows)} windows -> {len(file_tr)} Train | {len(file_vl)} Val | {len(file_ts)} Test")
     # Re-index window IDs sequentially within each partition
     for i, w in enumerate(train_windows):
         w["window_idx"] = i

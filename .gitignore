@@ -57,3 +57,7 @@ desktop.ini
 scratch/
 tmp/
 temp/
+
+# Streamlit credentials
+.streamlit/credentials.toml
+

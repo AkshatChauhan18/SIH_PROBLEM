@@ -103,23 +103,35 @@ class NetworkWorldModelSystem(nn.Module):
         target_event_next: torch.Tensor,
     ) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
         """
-        Computes Dual Loss:
-            Loss = MSE(pred_z[t+1], actual_z[t+1]) + lambda * CrossEntropy(ThreatHead(pred_z[t+1]), target_event[t+1])
+        Computes Enhanced Dual Loss:
+            Dynamics Loss = MSE(pred_z, actual_z) + 0.5 * (1 - CosineSimilarity)
+            Classification Loss = Multi-Class Focal Loss on actual_z and pred_z rollouts
         """
-        # Dynamics loss with stop-gradient on target representation
-        # (CRITICAL: prevents trivial representation collapse where encoder maps all graphs to a constant)
-        mse_loss = F.mse_loss(pred_z_next.float(), actual_z_next.detach().float())
+        target_z = actual_z_next.detach().float()
+        pred_z = pred_z_next.float()
+
+        mse_loss = F.mse_loss(pred_z, target_z)
+        cos_sim = F.cosine_similarity(pred_z, target_z, dim=-1).clamp(-1.0, 1.0).mean()
+        dynamics_loss = mse_loss + 0.5 * (1.0 - cos_sim)
 
         weight = self.class_weights.to(pred_z_next.device) if self.class_weights is not None else None
 
-        # Direct supervision on GNN encoder: forces GNN to learn distinct topology embeddings for attacks
-        actual_logits = self.threat_head(actual_z_next)
-        ce_encoder = F.cross_entropy(actual_logits.float(), target_event_next, weight=weight)
+        def _focal_ce(logits, targets, gamma=1.5):
+            ce = F.cross_entropy(logits, targets, reduction="none")
+            pt = torch.exp(-ce).clamp(1e-6, 1.0)
+            focal_factor = (1.0 - pt) ** gamma
+            if weight is not None:
+                focal_factor = weight[targets] * focal_factor
+            return (focal_factor * ce).mean()
 
-        # Predictive supervision on future rollout from World Model GRU
-        pred_logits = self.threat_head(pred_z_next)
-        ce_forecast = F.cross_entropy(pred_logits.float(), target_event_next, weight=weight)
+        # Direct representation supervision on actual next state
+        actual_logits = self.threat_head(actual_z_next).float()
+        focal_encoder = _focal_ce(actual_logits, target_event_next)
 
-        ce_loss = 0.5 * (ce_encoder + ce_forecast)
-        total_loss = mse_loss + self.lambda_threat * ce_loss
-        return total_loss, mse_loss, ce_loss
+        # Predictive forecast supervision on World Model rollout
+        pred_logits = self.threat_head(pred_z_next).float()
+        focal_forecast = _focal_ce(pred_logits, target_event_next)
+
+        cls_loss = 0.5 * (focal_encoder + focal_forecast)
+        total_loss = dynamics_loss + self.lambda_threat * cls_loss
+        return total_loss, dynamics_loss, cls_loss
